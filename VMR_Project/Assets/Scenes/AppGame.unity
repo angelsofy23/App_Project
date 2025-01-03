@@ -767,8 +767,8 @@ Transform:
   m_GameObject: {fileID: 1315440473}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.138082, y: -3.1175666, z: -10.460966}
-  m_LocalScale: {x: 2.1893148, y: 1, z: 1.5946}
+  m_LocalPosition: {x: -9.138082, y: -3.1176, z: -6.4508}
+  m_LocalScale: {x: 2.1893148, y: 1, z: 3.5972686}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1470,7 +1470,7 @@ Transform:
   m_GameObject: {fileID: 9112216577831852154}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.1552, y: -3.117567, z: -8.0669}
+  m_LocalPosition: {x: -10.24, y: -3.117567, z: -10.88}
   m_LocalScale: {x: 0.9833, y: 1, z: 0.8407}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2441,11 +2441,11 @@ MonoBehaviour:
   FrontWheelRightCollider: {fileID: 1970725111}
   BackWheelLeftCollider: {fileID: 334402120}
   BackWheelRightCollider: {fileID: 1418865116}
-  maxSpeed: 0
-  maxMotorTorque: 0
-  maxSteeringAngle: 20
-  brakePower: 0
-  COM: {fileID: 0}
+  maxSpeed: 100
+  maxMotorTorque: 150
+  maxSteeringAngle: 25
+  brakePower: 1000
+  COM: {fileID: 1336158291}
 --- !u!54 &9112216577831852156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2454,7 +2454,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9112216577831852154}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
