@@ -10,7 +10,7 @@ public class CarController : MonoBehaviour
     private bool isBreaking;
 
     // Settings
-    [SerializeField] private float motorForce, breakForce, maxSteerAngle;
+    [SerializeField] private float motorForce, breakForce, maxSteerAngle, steeringSpeed;
 
     // Wheel Colliders
     [SerializeField] private WheelCollider frontLeftWheelCollider, frontRightWheelCollider;
@@ -24,19 +24,15 @@ public class CarController : MonoBehaviour
     {
         GetInput();
         HandleMotor();
-        HandleSteering();
+        CalculateSteering();
         UpdateWheels();
+        ApplyTransformToWheels();
     }
 
     private void GetInput()
     {
-        // Steering Input
         horizontalInput = Input.GetAxis("Horizontal");
-
-        // Acceleration Input
         verticalInput = Input.GetAxis("Vertical");
-
-        // Breaking Input
         isBreaking = Input.GetKey(KeyCode.Space);
     }
 
@@ -56,9 +52,10 @@ public class CarController : MonoBehaviour
         rearRightWheelCollider.brakeTorque = currentbreakForce;
     }
 
-    private void HandleSteering()
+    private void CalculateSteering()
     {
-        currentSteerAngle = maxSteerAngle * horizontalInput;
+        float targetSteerAngle = maxSteerAngle * horizontalInput;
+        currentSteerAngle = Mathf.Lerp(currentSteerAngle, targetSteerAngle, Time.deltaTime * steeringSpeed);
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
     }
@@ -78,5 +75,27 @@ public class CarController : MonoBehaviour
         wheelCollider.GetWorldPose(out pos, out rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+
+    public void ApplyTransformToWheels()
+    {
+        Vector3 position;
+        Quaternion rotation;
+
+        frontLeftWheelCollider.GetWorldPose(out position, out rotation);
+        frontLeftWheelTransform.position = position;
+        frontLeftWheelTransform.rotation = rotation;
+
+        frontRightWheelCollider.GetWorldPose(out position, out rotation);
+        frontRightWheelTransform.position = position;
+        frontRightWheelTransform.rotation = rotation;
+
+        rearLeftWheelCollider.GetWorldPose(out position, out rotation);
+        rearLeftWheelTransform.position = position;
+        rearLeftWheelTransform.rotation = rotation;
+
+        rearRightWheelCollider.GetWorldPose(out position, out rotation);
+        rearRightWheelTransform.position = position;
+        rearRightWheelTransform.rotation = rotation;
     }
 }
