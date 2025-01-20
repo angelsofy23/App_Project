@@ -15,6 +15,10 @@ public class CarController : MonoBehaviour
 
     public AudioSource engineSound;
 
+    [Header("Lap")]
+    public int maxLaps;
+    public int currentLap;
+
     // Configurações
     [SerializeField] private float motorForce, breakForce, maxSteerAngle, steeringSpeed;
     [SerializeField] private float maximumSpeed = 200f; // Velocidade máxima do carro
@@ -37,6 +41,8 @@ public class CarController : MonoBehaviour
         engineSound.volume = 0.1f;
         engineSound.pitch = 0.7f;
         engineSound.Play();
+
+        maxLaps = FindObjectOfType<FinishSystem>().maxLaps;
     }
 
     private void FixedUpdate()
@@ -167,5 +173,10 @@ public class CarController : MonoBehaviour
                 smokeEffect.Stop();
             }
         }
+    }
+    public void IncreaseLap()
+    {
+        currentLap++;
+        Debug.Log(gameObject.name + " Lap: " + currentLap);
     }
 }

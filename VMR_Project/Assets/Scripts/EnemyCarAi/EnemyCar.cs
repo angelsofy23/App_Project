@@ -13,6 +13,10 @@ public class EnemyCar : MonoBehaviour
     public Vector3 destination;
     public bool destinationReached;
 
+    [Header("Lap")]
+    public int maxLaps;
+    public int currentLap;
+        
     private Rigidbody rb;
 
     void Start()
@@ -22,6 +26,8 @@ public class EnemyCar : MonoBehaviour
 
         // Adicionando restri��es para evitar que o carro rode para cima
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        maxLaps = FindObjectOfType<FinishSystem>().maxLaps;
     }
 
     void FixedUpdate()
@@ -61,5 +67,11 @@ public class EnemyCar : MonoBehaviour
     {
         destination = newDestination;
         destinationReached = false;
+    }
+
+    public void IncreaseLap()
+    {
+        currentLap++;
+        Debug.Log(" Car " + gameObject.name + " Lap: " + currentLap);
     }
 }
