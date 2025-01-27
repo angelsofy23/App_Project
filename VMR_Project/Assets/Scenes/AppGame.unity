@@ -21432,6 +21432,7 @@ GameObject:
   - component: {fileID: 1554219258}
   - component: {fileID: 1554219257}
   - component: {fileID: 1554219256}
+  - component: {fileID: 1554219259}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -21528,6 +21529,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1554219254}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1554219259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554219254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725add69099b6b348a60bf5de24c174b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  effectDuration: 5
+  cooldownTime: 10
+  type: 2
 --- !u!4 &1558152725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 494338, guid: ea8ec36c7f9b40f4faa40bf80afec5a3, type: 3}
@@ -24690,7 +24707,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1789307004}
   m_Layer: 0
-  m_Name: RemoveEnemy
+  m_Name: DisableEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24726,6 +24743,7 @@ GameObject:
   - component: {fileID: 1795723846}
   - component: {fileID: 1795723845}
   - component: {fileID: 1795723844}
+  - component: {fileID: 1795723847}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -24822,6 +24840,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795723842}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1795723847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795723842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725add69099b6b348a60bf5de24c174b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  effectDuration: 5
+  cooldownTime: 10
+  type: 1
 --- !u!1001 &1796276056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28054,6 +28088,7 @@ GameObject:
   - component: {fileID: 2134333936}
   - component: {fileID: 2134333935}
   - component: {fileID: 2134333934}
+  - component: {fileID: 2134333937}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -28150,6 +28185,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2134333932}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2134333937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134333932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725add69099b6b348a60bf5de24c174b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  effectDuration: 5
+  cooldownTime: 10
+  type: 0
 --- !u!1 &2141885783
 GameObject:
   m_ObjectHideFlags: 0
@@ -30259,8 +30310,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9112216577831852154}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -50, y: 0, z: -89.37}
+  m_LocalRotation: {x: -0, y: -0.9423079, z: -0, w: 0.33474737}
+  m_LocalPosition: {x: -274.8, y: 0, z: -89.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30269,7 +30320,7 @@ Transform:
   - {fileID: 1779229645}
   - {fileID: 785452429}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -140.886, z: 0}
 --- !u!23 &2870672219873810395
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -31884,6 +31935,7 @@ MonoBehaviour:
   destinationReached: 0
   maxLaps: 0
   currentLap: 0
+  isInactive: 0
 --- !u!114 &5493604083363972606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33283,6 +33335,7 @@ MonoBehaviour:
   destinationReached: 0
   maxLaps: 0
   currentLap: 0
+  isInactive: 0
 --- !u!114 &7767638661767177876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33606,6 +33659,7 @@ MonoBehaviour:
   destinationReached: 0
   maxLaps: 0
   currentLap: 0
+  isInactive: 0
 --- !u!114 &8385174720638494275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34230,6 +34284,7 @@ MonoBehaviour:
   destinationReached: 0
   maxLaps: 0
   currentLap: 0
+  isInactive: 0
 --- !u!4 &8884856881332079079
 Transform:
   m_ObjectHideFlags: 0
@@ -34499,7 +34554,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9112216577831852154}
   serializedVersion: 4
-  m_Mass: 1100
+  m_Mass: 1500
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
