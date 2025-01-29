@@ -5,9 +5,12 @@ public class ButtonsBehavior : MonoBehaviour
 {
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject menuPausa;
 
     void Start()
     {
+        Time.timeScale = 1f;
+        
         // Make sure options menu is hidden at start
         if (optionsMenu != null)
             optionsMenu.SetActive(false);
@@ -23,7 +26,7 @@ public class ButtonsBehavior : MonoBehaviour
         SceneManager.LoadScene("AppGame");
     }
 
-    public void ShowOptionsMenu()
+    public void GoToOptionsMenu()
     {
         if (optionsMenu != null)
         {
@@ -33,7 +36,7 @@ public class ButtonsBehavior : MonoBehaviour
         }
     }
 
-    public void BackToMainMenu()
+    public void OffOptionsMenu()
     {
         if (mainMenu != null)
         {
@@ -49,5 +52,28 @@ public class ButtonsBehavior : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+
+     public void ClickSoundButton()
+    {
+        //audioSource.PlayOneShot(hoverSound);
+        AudioManager.Instance.PlaySoundEffects("Click Button");
+    }
+
+    public void PauseGame()
+    {
+            menuPausa.SetActive(true);
+            Time.timeScale = 0f;
+    }
+
+    public void ContinueGame()
+    {
+        menuPausa.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void GoHome()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
