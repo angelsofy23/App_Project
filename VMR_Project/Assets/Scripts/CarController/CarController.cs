@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CarController : MonoBehaviour
 {
@@ -175,5 +176,20 @@ public class CarController : MonoBehaviour
     {
         currentLap++;
         Debug.Log(gameObject.name + " Lap: " + currentLap);
+    }
+
+    public void BoostSpeed(float duration, float multiplier)
+    {
+        StartCoroutine(BoostSpeedCoroutine(duration, multiplier));
+    }
+
+    private IEnumerator BoostSpeedCoroutine(float duration, float multiplier)
+    {
+        float originalMotorForce = motorForce;
+        motorForce *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        motorForce = originalMotorForce;
     }
 }
