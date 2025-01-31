@@ -21,7 +21,11 @@ public class EnemyCar : MonoBehaviour
     private Rigidbody rb;
     public bool isInactive = false;  // Flag para verificar se o inimigo está inativo
     private float deactivateTime;     // Tempo que o inimigo foi desativado
-    private float deactivateDuration = 10f;  // Duração que o inimigo ficará inativo
+    private float deactivateDuration = 5f;  // Duração que o inimigo ficará inativo
+
+    [Header("Waypoint Management")]
+    public Waypoint currentWaypoint;
+    public Waypoint lastWaypoint; // Armazenando o último waypoint alcançado
 
     void Start()
     {
@@ -45,6 +49,12 @@ public class EnemyCar : MonoBehaviour
         if (isInactive && Time.time - deactivateTime >= deactivateDuration)
         {
             ReactivateEnemy();
+        }
+
+        // Verificar se o inimigo saiu da trajetória e retornar ao último waypoint
+        if (currentWaypoint != null && Vector3.Distance(transform.position, currentWaypoint.transform.position) > currentWaypoint.waypointWidth)
+        {
+            ReturnToLastWaypoint();
         }
     }
 
@@ -125,5 +135,22 @@ public class EnemyCar : MonoBehaviour
         isInactive = false;          // Marca que o inimigo não está mais inativo
 
         Debug.Log($"Inimigo {gameObject.name} reapareceu! Tempo: {Time.time}");
+    }
+
+    // Método que faz o inimigo retornar ao último waypoint alcançado
+    private void ReturnToLastWaypoint()
+    {
+        if (lastWaypoint != null)
+        {
+            // Direciona o inimigo para o último waypoint
+            LocateDestination(lastWaypoint.GetPosition());
+            Debug.Log($"Inimigo {gameObject.name} retornando para o último waypoint: {lastWaypoint.name}");
+        }
+    }
+
+    // Atualiza o último waypoint visitado
+    public void UpdateLastWaypoint(Waypoint waypoint)
+    {
+        lastWaypoint = waypoint;
     }
 }

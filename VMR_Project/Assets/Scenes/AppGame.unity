@@ -1456,7 +1456,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8cd9769d79c583642ab5023b53867fe7, type: 2}
+  - {fileID: 2100000, guid: 2dd3218c03ea48a49b688b8daa4181de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5946,7 +5946,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3f13a4ae781bb24687b44280d443c04, type: 2}
+  - {fileID: 2100000, guid: 2dd3218c03ea48a49b688b8daa4181de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7070,7 +7070,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8cd9769d79c583642ab5023b53867fe7, type: 2}
+  - {fileID: 2100000, guid: 2dd3218c03ea48a49b688b8daa4181de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20261,7 +20261,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6bcd66c490d3e5d49a3bce66b4b787fc, type: 2}
+  - {fileID: 2100000, guid: 2dd3218c03ea48a49b688b8daa4181de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21682,6 +21682,7 @@ GameObject:
   - component: {fileID: 1448956216}
   - component: {fileID: 1448956215}
   - component: {fileID: 1448956214}
+  - component: {fileID: 1448956217}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -21778,6 +21779,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448956212}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1448956217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448956212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725add69099b6b348a60bf5de24c174b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  effectDuration: 5
+  cooldownTime: 10
+  type: 1
 --- !u!1 &1452109165
 GameObject:
   m_ObjectHideFlags: 0
@@ -27081,7 +27098,6 @@ GameObject:
   - component: {fileID: 1795723846}
   - component: {fileID: 1795723845}
   - component: {fileID: 1795723844}
-  - component: {fileID: 1795723847}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -27148,7 +27164,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3f13a4ae781bb24687b44280d443c04, type: 2}
+  - {fileID: 2100000, guid: 2dd3218c03ea48a49b688b8daa4181de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27178,22 +27194,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795723842}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1795723847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795723842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 725add69099b6b348a60bf5de24c174b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  effectDuration: 5
-  cooldownTime: 10
-  type: 1
 --- !u!1001 &1796276056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27570,7 +27570,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6bcd66c490d3e5d49a3bce66b4b787fc, type: 2}
+  - {fileID: 2100000, guid: 2dd3218c03ea48a49b688b8daa4181de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -34539,6 +34539,8 @@ MonoBehaviour:
   maxLaps: 0
   currentLap: 0
   isInactive: 0
+  currentWaypoint: {fileID: 0}
+  lastWaypoint: {fileID: 0}
 --- !u!114 &5493604083363972606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35939,6 +35941,8 @@ MonoBehaviour:
   maxLaps: 0
   currentLap: 0
   isInactive: 0
+  currentWaypoint: {fileID: 0}
+  lastWaypoint: {fileID: 0}
 --- !u!114 &7767638661767177876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36263,6 +36267,8 @@ MonoBehaviour:
   maxLaps: 0
   currentLap: 0
   isInactive: 0
+  currentWaypoint: {fileID: 0}
+  lastWaypoint: {fileID: 0}
 --- !u!114 &8385174720638494275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36888,6 +36894,8 @@ MonoBehaviour:
   maxLaps: 0
   currentLap: 0
   isInactive: 0
+  currentWaypoint: {fileID: 0}
+  lastWaypoint: {fileID: 0}
 --- !u!4 &8884856881332079079
 Transform:
   m_ObjectHideFlags: 0

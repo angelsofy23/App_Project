@@ -11,6 +11,16 @@ public class PowerUp : MonoBehaviour
     public float cooldownTime = 10f;
     public PowerUpType type;
 
+    private MeshRenderer meshRenderer;
+    private Collider powerUpCollider;
+
+    private void Start()
+    {
+        // Pegamos os componentes para poder desativar a aparência do PowerUp
+        meshRenderer = GetComponent<MeshRenderer>();
+        powerUpCollider = GetComponent<Collider>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && state == PowerUpState.Available)
@@ -23,6 +33,10 @@ public class PowerUp : MonoBehaviour
     {
         state = PowerUpState.Activated;
         StartCoroutine(ApplyEffect(player));
+
+        // Desativar a aparência do PowerUp
+        meshRenderer.enabled = false;
+        powerUpCollider.enabled = false;
     }
 
     IEnumerator ApplyEffect(GameObject player)
@@ -48,15 +62,7 @@ public class PowerUp : MonoBehaviour
                 break;
         }
 
-        // Não usamos mais WaitForSeconds aqui
-        // Vamos definir manualmente a reativação do inimigo usando Time.time
-        float startTime = Time.time;  // Marca o tempo inicial da aplicação do efeito
-        while (Time.time - startTime < effectDuration)
-        {
-            yield return null;  // Espera sem bloquear a execução
-        }
-
-        // Agora começa o cooldown do PowerUp
+        yield return new WaitForSeconds(effectDuration);
         StartCoroutine(StartCooldown());
     }
 
@@ -64,19 +70,12 @@ public class PowerUp : MonoBehaviour
     {
         state = PowerUpState.Cooldown;
 
-        // Log de depuração para o cooldown
-        Debug.Log("Cooldown iniciado!");
+        // Espera o cooldown acabar
+        yield return new WaitForSeconds(cooldownTime);
 
-        // Aguarda o tempo de cooldown para que o PowerUp se torne disponível novamente
-        float cooldownStartTime = Time.time; // Marca o tempo inicial do cooldown
-        while (Time.time - cooldownStartTime < cooldownTime)
-        {
-            yield return null;  // Espera sem bloquear a execução
-        }
-
+        // Reativa o PowerUp
         state = PowerUpState.Available;
-
-        // Log de depuração para o fim do cooldown
-        Debug.Log("Cooldown terminado, PowerUp disponível novamente.");
+        meshRenderer.enabled = true; // Reativa a aparência
+        powerUpCollider.enabled = true; // Reativa a colisão
     }
 }
