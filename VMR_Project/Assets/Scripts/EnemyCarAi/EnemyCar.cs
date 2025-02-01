@@ -10,6 +10,12 @@ public class EnemyCar : MonoBehaviour
     public float turningSpeed = 30f;
     public float breakSpeed = 2f;
 
+    [Header("Obstacle Avoidance")]
+    public float detectionDistance = 5f; // Distância para detectar obstáculos à frente
+    public float sideDetectionDistance = 3f; // Distância para verificar espaço lateral
+    public float avoidanceForce = 2f; // Força de desvio
+    public LayerMask obstacleLayer; // Camada dos obstáculos
+
     [Header("Destination Var")]
     public Vector3 destination;
     public bool destinationReached;
@@ -19,20 +25,19 @@ public class EnemyCar : MonoBehaviour
     public int currentLap;
 
     private Rigidbody rb;
-    public bool isInactive = false;  // Flag para verificar se o inimigo está inativo
-    private float deactivateTime;     // Tempo que o inimigo foi desativado
-    private float deactivateDuration = 5f;  // Duração que o inimigo ficará inativo
+    public bool isInactive = false;
+    private float deactivateTime;
+    private float deactivateDuration = 5f;
 
     [Header("Waypoint Management")]
     public Waypoint currentWaypoint;
-    public Waypoint lastWaypoint; // Armazenando o último waypoint alcançado
+    public Waypoint lastWaypoint;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
 
-        // Adicionando restrições para evitar que o carro vire para cima
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         maxLaps = FindObjectOfType<FinishSystem>().maxLaps;
@@ -42,46 +47,72 @@ public class EnemyCar : MonoBehaviour
     {
         if (!isInactive)
         {
+            DetectAndAvoidObstacles();
             Drive();
         }
 
-        // Se o inimigo estiver inativo e o tempo de espera tiver passado, reativa o movimento
         if (isInactive && Time.time - deactivateTime >= deactivateDuration)
         {
             ReactivateEnemy();
         }
 
-        // Verificar se o inimigo saiu da trajetória e retornar ao último waypoint
         if (currentWaypoint != null && Vector3.Distance(transform.position, currentWaypoint.transform.position) > currentWaypoint.waypointWidth)
         {
             ReturnToLastWaypoint();
         }
     }
 
-    public void Drive()
+    void Drive()
     {
         if (!destinationReached)
         {
             Vector3 destinationDirection = destination - transform.position;
-            destinationDirection.y = 0; // Evita que o carro suba ao mirar no destino
+            destinationDirection.y = 0;
             float destinationDistance = destinationDirection.magnitude;
 
-            // Faz o carro girar suavemente em direção ao destino
             if (destinationDistance >= breakSpeed)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
                 rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, turningSpeed * Time.fixedDeltaTime));
 
-                // Aumenta gradualmente a velocidade até o máximo
                 currentSpeed = Mathf.MoveTowards(currentSpeed, maxSpeed, acceleration * Time.fixedDeltaTime);
-
-                // Move o carro para frente usando a força do Rigidbody
                 rb.linearVelocity = transform.forward * currentSpeed;
             }
             else
             {
                 destinationReached = true;
                 rb.linearVelocity = Vector3.zero;
+            }
+        }
+    }
+
+    void DetectAndAvoidObstacles()
+    {
+        RaycastHit hit;
+        Vector3 forward = transform.forward;
+
+        // Raycast para detectar obstáculos à frente
+        if (Physics.Raycast(transform.position, forward, out hit, detectionDistance, obstacleLayer))
+        {
+            if (hit.collider.CompareTag("Obstacle"))
+            {
+                Debug.Log("Obstáculo detectado! Tentando desviar...");
+
+                bool canGoRight = !Physics.Raycast(transform.position + transform.right * 0.5f, forward, sideDetectionDistance, obstacleLayer);
+                bool canGoLeft = !Physics.Raycast(transform.position - transform.right * 0.5f, forward, sideDetectionDistance, obstacleLayer);
+
+                if (canGoRight)
+                {
+                    rb.AddForce(transform.right * avoidanceForce, ForceMode.Impulse);
+                }
+                else if (canGoLeft)
+                {
+                    rb.AddForce(-transform.right * avoidanceForce, ForceMode.Impulse);
+                }
+                else
+                {
+                    rb.linearVelocity *= 0.5f;
+                }
             }
         }
     }
@@ -113,44 +144,47 @@ public class EnemyCar : MonoBehaviour
         maxSpeed = originalMaxSpeed;
     }
 
-    // Desativa temporariamente o inimigo, congelando o Rigidbody
     public void DeactivateTemporarily(float duration)
     {
-        isInactive = true;               // Marca que o inimigo está inativo
-        deactivateDuration = duration;   // Define a duração que o inimigo ficará inativo
-        deactivateTime = Time.time;      // Marca o tempo em que a desativação ocorreu
+        isInactive = true;
+        deactivateDuration = duration;
+        deactivateTime = Time.time;
 
-        // Congela a velocidade e a rotação do inimigo
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        Debug.Log($"Inimigo {gameObject.name} removido temporariamente! Tempo iniciado: {deactivateTime}");
+        Debug.Log($"Inimigo {gameObject.name} removido temporariamente!");
     }
 
-    // Reativa o inimigo e o deixa voltar ao movimento
     private void ReactivateEnemy()
     {
-        // Descongela o movimento do inimigo
-        rb.linearVelocity = Vector3.zero;  // Garante que o carro pare antes de retomar o movimento
-        isInactive = false;          // Marca que o inimigo não está mais inativo
+        rb.linearVelocity = Vector3.zero;
+        isInactive = false;
 
-        Debug.Log($"Inimigo {gameObject.name} reapareceu! Tempo: {Time.time}");
+        Debug.Log($"Inimigo {gameObject.name} reapareceu!");
     }
 
-    // Método que faz o inimigo retornar ao último waypoint alcançado
     private void ReturnToLastWaypoint()
     {
         if (lastWaypoint != null)
         {
-            // Direciona o inimigo para o último waypoint
             LocateDestination(lastWaypoint.GetPosition());
             Debug.Log($"Inimigo {gameObject.name} retornando para o último waypoint: {lastWaypoint.name}");
         }
     }
 
-    // Atualiza o último waypoint visitado
     public void UpdateLastWaypoint(Waypoint waypoint)
     {
         lastWaypoint = waypoint;
+    }
+
+    // Trigger Collider para detectar obstáculos próximos
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Obstacle"))
+        {
+            Debug.Log("Inimigo detectou um obstáculo próximo!");
+            ReduceSpeed(2f, 0.5f); // Reduz a velocidade por 2 segundos
+        }
     }
 }
