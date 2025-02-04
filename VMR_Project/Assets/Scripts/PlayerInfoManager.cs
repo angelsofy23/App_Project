@@ -1,42 +1,50 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
-public class PlayerInfoManager : MonoBehaviour
+public class PlayerDataManager : MonoBehaviour
 {
-    public GameObject infoInputPanel; 
-    public TMP_InputField usernameInput;
     public TMP_InputField emailInput;
-
-    public TMP_InputField usernameDisplay;
-    public TMP_InputField emailDisplay;
+    public TMP_InputField usernameInput;
+    public TMP_InputField displayEmailInput; // InputField onde será mostrado o email guardado
+    public TMP_InputField displayUsernameInput; // InputField onde será mostrado o username guardado
+    public GameObject registrationPanel; // Painel de registo
 
     void Start()
     {
-        if (!PlayerPrefs.HasKey("Username"))
+        // Verifica se o jogador já preencheu os dados antes
+        if (PlayerPrefs.HasKey("HasRegistered"))
         {
-            infoInputPanel.SetActive(true);
+            registrationPanel.SetActive(false); // Esconde o painel se já tiver jogado antes
+            
+            string savedEmail = PlayerPrefs.GetString("Email", "");
+            string savedUsername = PlayerPrefs.GetString("Username", "");
+
+            // Preenche os campos de registo (caso o jogador queira mudar os dados)
+            emailInput.text = savedEmail;
+            usernameInput.text = savedUsername;
+
+            // Preenche as caixas de input no menu principal (ou em qualquer outro sítio)
+            if (displayEmailInput != null) displayEmailInput.text = savedEmail;
+            if (displayUsernameInput != null) displayUsernameInput.text = savedUsername;
         }
         else
         {
-            usernameDisplay.text = PlayerPrefs.GetString("Username");
-            emailDisplay.text = PlayerPrefs.GetString("Email");
+            registrationPanel.SetActive(true); // Mostra o painel se for a primeira vez
         }
     }
 
-    public void SavePlayerInfoInputPanelButton()
+    public void SavePlayerDataButton()
     {
-        string username = usernameInput.text;
-        string email = emailInput.text;
+        // Guarda os dados no PlayerPrefs
+        PlayerPrefs.SetString("Email", emailInput.text);
+        PlayerPrefs.SetString("Username", usernameInput.text);
+        PlayerPrefs.SetInt("HasRegistered", 1); // Marca que já registrou
+        PlayerPrefs.Save(); // Salva os dados
 
-        PlayerPrefs.SetString("Username", username);
-        PlayerPrefs.SetString("Email", email);
-        PlayerPrefs.Save();
+        // Atualiza os campos onde as informações são exibidas
+        if (displayEmailInput != null) displayEmailInput.text = emailInput.text;
+        if (displayUsernameInput != null) displayUsernameInput.text = usernameInput.text;
 
-        usernameDisplay.text = username;
-        emailDisplay.text = email;
-
-        infoInputPanel.SetActive(false); // Esconder o painel após salvar
+        registrationPanel.SetActive(false); // Esconde o painel
     }
 }
-

@@ -3732,11 +3732,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ba4633e7d6acd489ec77e240ffe726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoInputPanel: {fileID: 1223304641}
-  usernameInput: {fileID: 656158461}
   emailInput: {fileID: 834582580}
-  usernameDisplay: {fileID: 499943452}
-  emailDisplay: {fileID: 1408905604}
+  usernameInput: {fileID: 656158461}
+  displayEmailInput: {fileID: 1408905604}
+  displayUsernameInput: {fileID: 499943452}
+  registrationPanel: {fileID: 1223304641}
 --- !u!1 &1251128891
 GameObject:
   m_ObjectHideFlags: 0
@@ -4584,7 +4584,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1493445111}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
@@ -5851,8 +5851,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1223304643}
-        m_TargetAssemblyTypeName: PlayerInfoManager, Assembly-CSharp
-        m_MethodName: SavePlayerInfoInputPanelButton
+        m_TargetAssemblyTypeName: PlayerDataManager, Assembly-CSharp
+        m_MethodName: SavePlayerDataButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
