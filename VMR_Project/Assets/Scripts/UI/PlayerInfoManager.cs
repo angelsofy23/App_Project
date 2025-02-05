@@ -11,6 +11,8 @@ public class PlayerDataManager : MonoBehaviour
     public GameObject editPanel;
     public TMP_InputField editEmailInput;
     public TMP_InputField editUsernameInput;
+    public TMP_Text errorMessage;
+    public TMP_Text errorMessageChangePanel;
 
     void Start()
     {
@@ -27,6 +29,12 @@ public class PlayerDataManager : MonoBehaviour
 
     public void SavePlayerDataButton()
     {
+        if (string.IsNullOrWhiteSpace(emailInput.text) || string.IsNullOrWhiteSpace(usernameInput.text))
+        {
+            errorMessage.gameObject.SetActive(true);
+            return;
+        }
+
         PlayerPrefs.SetString("Email", emailInput.text);
         PlayerPrefs.SetString("Username", usernameInput.text);
         PlayerPrefs.SetInt("HasRegistered", 1);
@@ -53,6 +61,12 @@ public class PlayerDataManager : MonoBehaviour
 
     public void SaveEditedPlayerDataButton()
     {
+            if (string.IsNullOrWhiteSpace(editEmailInput.text) || string.IsNullOrWhiteSpace(editUsernameInput.text))
+        {
+            errorMessageChangePanel.gameObject.SetActive(true);
+            return;
+        }
+
         PlayerPrefs.SetString("Email", editEmailInput.text);
         PlayerPrefs.SetString("Username", editUsernameInput.text);
         PlayerPrefs.Save();
@@ -63,5 +77,6 @@ public class PlayerDataManager : MonoBehaviour
     public void OffEditPanel()
     {
         editPanel.SetActive(false);
+        errorMessageChangePanel.gameObject.SetActive(false);
     }
 }
