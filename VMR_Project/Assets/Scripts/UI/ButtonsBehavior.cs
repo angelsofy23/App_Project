@@ -6,7 +6,7 @@ public class ButtonsBehavior : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject menuPausa;
-
+    
     void Start()
     {
         Time.timeScale = 1f;
