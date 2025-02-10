@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:VMR_Project/Assets/Prefabs/Missil.prefab.meta
 guid: 284c4cf4dc8f9ef4f8ed61b114d57cac
 PrefabImporter:
+========
+guid: c083396e03ed5524b9fb9907ef1bd21f
+folderAsset: yes
+DefaultImporter:
+>>>>>>>> cf5b186f7ba3df103cb1482cedd443542d29f1a8:VMR_Project/Assets/Plugins.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

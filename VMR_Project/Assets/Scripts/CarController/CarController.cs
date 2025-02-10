@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class CarController : MonoBehaviour
@@ -17,9 +17,13 @@ public class CarController : MonoBehaviour
     public int maxLaps;
     public int currentLap;
 
-    // Configurações
+    // Speed Boost
+    private bool isBoosting = false;
+    private float originalMotorForce;
+
+    // ConfiguraÃ§Ãµes
     [SerializeField] private float motorForce, breakForce, maxSteerAngle, steeringSpeed;
-    [SerializeField] private float maximumSpeed = 200f; // Velocidade máxima do carro
+    [SerializeField] private float maximumSpeed = 200f; // Velocidade mÃ¡xima do carro
 
     private float currentSpeed;
     private bool handBrake;
@@ -39,6 +43,8 @@ public class CarController : MonoBehaviour
         engineSound.volume = 0.1f;
         engineSound.pitch = 0.7f;
         engineSound.Play();
+
+        originalMotorForce = motorForce; // Salva o valor original ao iniciar o jogo
 
         maxLaps = FindObjectOfType<FinishSystem>().maxLaps;
     }
@@ -98,13 +104,13 @@ public class CarController : MonoBehaviour
         // Normaliza a velocidade do carro entre 0 e 1
         float normalizedSpeed = Mathf.Clamp(currentSpeed / maximumSpeed, 0f, 1f);
 
-        // Aumentar ainda mais a suavização com um valor maior no Power
+        // Aumentar ainda mais a suavizaÃ§Ã£o com um valor maior no Power
         float smoothFactor = Mathf.Pow(normalizedSpeed, 0.3f);  // Aumento mais suave
 
-        // Altere a interpolação para que o som mude mais suavemente
-        // Para o pitch, use uma variação ainda mais controlada
+        // Altere a interpolaÃ§Ã£o para que o som mude mais suavemente
+        // Para o pitch, use uma variaÃ§Ã£o ainda mais controlada
         float targetPitch = Mathf.Lerp(0.7f, 1.0f, smoothFactor);  // Intervalo mais baixo
-        float targetVolume = Mathf.Lerp(0.1f, 0.2f, smoothFactor);  // Volume mais baixo também
+        float targetVolume = Mathf.Lerp(0.1f, 0.2f, smoothFactor);  // Volume mais baixo tambÃ©m
 
         // Aplicando o novo pitch e volume
         engineSound.pitch = targetPitch;
@@ -191,5 +197,25 @@ public class CarController : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         motorForce = originalMotorForce;
+    }
+
+    public void ActivateSpeedBoost()
+    {
+        if (!isBoosting)
+        {
+            Debug.Log("Speed Boost ativado!");
+            StartCoroutine(SpeedBoostEffect(3f, 9.0f)); // 3 segundos de boost com 1.5x a velocidade
+        }
+    }
+
+    private IEnumerator SpeedBoostEffect(float duration, float multiplier)
+    {
+        isBoosting = true;
+        motorForce *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        motorForce = originalMotorForce;
+        isBoosting = false;
     }
 }

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:VMR_Project/Assets/Prefabs.meta
 guid: 8d5369b1bad60054caf42770c756ae27
+========
+guid: f0df5459b8d6f6e4bae45ab4c8dcb3fa
+>>>>>>>> cf5b186f7ba3df103cb1482cedd443542d29f1a8:VMR_Project/Assets/Plugins/Android.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
