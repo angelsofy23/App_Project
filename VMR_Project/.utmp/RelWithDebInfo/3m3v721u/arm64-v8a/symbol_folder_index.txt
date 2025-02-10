@@ -1,0 +1,1 @@
+C:\Users\tomas\Desktop\Unity\IPS\2_Ano\Geral\App_Project\VMR_Project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\3m3v721u\obj\arm64-v8a
