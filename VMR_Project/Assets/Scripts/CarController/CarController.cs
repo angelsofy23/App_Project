@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
     private float horizontalInput, verticalInput;
     private float currentSteerAngle, currentbreakForce;
     private bool isBreaking;
+
+    private PlayerInput playerInput;
+    private InputAction moveAction;
 
     [Header("Sounds and Effects")]
     public ParticleSystem[] smokeEffects;
@@ -59,12 +63,6 @@ public class CarController : MonoBehaviour
         UpdateEngineSound();
     }
 
-    private void GetInput()
-    {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        isBreaking = Input.GetKey(KeyCode.Space);
-    }
 
     private void HandleMotor()
     {
@@ -208,6 +206,14 @@ public class CarController : MonoBehaviour
         }
     }
 
+    private void GetInput()
+    {
+        Vector2 inputVector = moveAction.ReadValue<Vector2>();
+        horizontalInput = inputVector.x;
+        verticalInput = inputVector.y;
+        isBreaking = Input.GetKey(KeyCode.Space); // Mantém o freio manual pelo teclado
+    }
+
     private IEnumerator SpeedBoostEffect(float duration, float multiplier)
     {
         isBoosting = true;
@@ -218,4 +224,11 @@ public class CarController : MonoBehaviour
         motorForce = originalMotorForce;
         isBoosting = false;
     }
+
+    void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        moveAction = playerInput.actions["Move"]; // Captura o movimento do joystick
+    }
+
 }

@@ -24,7 +24,7 @@ public class PhotoManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Foto capturada não encontrada!");
+            Debug.Log("Foto capturada não encontrada!");
         }
     }
 }
