@@ -8,6 +8,9 @@ public class CarController : MonoBehaviour
     private float currentSteerAngle, currentbreakForce;
     private bool isBreaking;
 
+    private bool isManualBraking = false;
+
+
     private PlayerInput playerInput;
     private InputAction moveAction;
 
@@ -206,13 +209,34 @@ public class CarController : MonoBehaviour
         }
     }
 
+    //Lógica dos botões de aceleração e travagem
+
+    public void StartBraking()
+    {
+        isManualBraking = true;
+        isBreaking = true;
+        verticalInput = 0f; // Impede aceleração enquanto trava
+    }
+
+    public void StopBraking()
+    {
+        isManualBraking = false;
+        isBreaking = false;
+    }
+
     private void GetInput()
     {
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
         horizontalInput = inputVector.x;
-        verticalInput = inputVector.y;
-        isBreaking = Input.GetKey(KeyCode.Space); // Mantém o freio manual pelo teclado
+
+        // Se os botões não estiverem sendo usados, o joystick controla o travão
+        if (!isManualBraking)
+        {
+            verticalInput = inputVector.y;
+            isBreaking = Input.GetKey(KeyCode.Space); // Mantém o travão manual pelo teclado
+        }
     }
+
 
     private IEnumerator SpeedBoostEffect(float duration, float multiplier)
     {
