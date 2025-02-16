@@ -200,15 +200,6 @@ public class CarController : MonoBehaviour
         motorForce = originalMotorForce;
     }
 
-    public void ActivateSpeedBoost()
-    {
-        if (!isBoosting)
-        {
-            Debug.Log("Speed Boost ativado!");
-            StartCoroutine(SpeedBoostEffect(3f, 9.0f)); // 3 segundos de boost com 1.5x a velocidade
-        }
-    }
-
     //Lógica dos botões de aceleração e travagem
 
     public void StartBraking()
@@ -235,18 +226,6 @@ public class CarController : MonoBehaviour
             verticalInput = inputVector.y;
             isBreaking = Input.GetKey(KeyCode.Space); // Mantém o travão manual pelo teclado
         }
-    }
-
-
-    private IEnumerator SpeedBoostEffect(float duration, float multiplier)
-    {
-        isBoosting = true;
-        motorForce *= multiplier;
-
-        yield return new WaitForSeconds(duration);
-
-        motorForce = originalMotorForce;
-        isBoosting = false;
     }
 
     void Awake()
