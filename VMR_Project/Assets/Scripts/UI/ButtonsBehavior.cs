@@ -6,6 +6,7 @@ public class ButtonsBehavior : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject menuPausa;
+    [SerializeField] private GameObject howToPlayPanel;
     
     void Start()
     {
@@ -75,5 +76,15 @@ public class ButtonsBehavior : MonoBehaviour
     public void GoHome()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void GoHowToPlayPanel()
+    {
+        howToPlayPanel.SetActive(true);
+    }
+
+    public void OffHowToPlayPanel()
+    {
+        howToPlayPanel.SetActive(false);
     }
 }
