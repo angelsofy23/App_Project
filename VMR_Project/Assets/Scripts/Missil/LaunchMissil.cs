@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LaunchMissil : MonoBehaviour
 {
     [SerializeField] private GameObject missilPrefab;
     [SerializeField] private float missilSpeed;
+    
+    [SerializeField] private Button missilButton;
+    private float transparencyValue = 125f;
+    private bool canLaunchMissil = true;
 
     private float time = 3.0f;
     private float timer;
@@ -12,21 +17,44 @@ public class LaunchMissil : MonoBehaviour
     void Start()
     {
         timer = 3.0f;
+        missilButton.onClick.AddListener(OnMissilButtonPressed);
     }
     
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-
-        if (timer >= time)
+        if (!canLaunchMissil)
         {
-            if (Input.GetKeyDown(KeyCode.B))
+            timer += Time.deltaTime;
+
+            if (timer >= time)
             {
-                var missil = Instantiate(missilPrefab, transform.position, transform.rotation);
-                missil.GetComponent<Rigidbody>().linearVelocity = transform.forward * missilSpeed;
-                timer = 0;
+                canLaunchMissil = true;
+                missilButton.interactable = true;
             }
         }
+    }
+
+    private void OnMissilButtonPressed()
+    {
+        if (canLaunchMissil)
+        {
+            var missil = Instantiate(missilPrefab, transform.position, transform.rotation);
+            missil.GetComponent<Rigidbody>().linearVelocity = transform.forward * missilSpeed;
+        
+            SetButtonConfiguration(transparencyValue);
+        
+            canLaunchMissil = false;
+            missilButton.interactable = false;
+
+            timer = 0;  
+        }
+    }
+
+    private void SetButtonConfiguration(float value)
+    {
+        ColorBlock colors = missilButton.colors;
+        colors.normalColor = new Color(colors.normalColor.r, colors.normalColor.g, colors.normalColor.b, value);
+        missilButton.colors = colors;
     }
 }
