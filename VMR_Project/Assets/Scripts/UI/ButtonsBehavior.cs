@@ -87,4 +87,9 @@ public class ButtonsBehavior : MonoBehaviour
     {
         howToPlayPanel.SetActive(false);
     }
+    
+    public void Repeat()
+    {
+        SceneManager.LoadScene("GameSingleplayer");
+    }
 }
