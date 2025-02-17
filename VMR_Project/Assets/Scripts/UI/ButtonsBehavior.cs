@@ -90,6 +90,6 @@ public class ButtonsBehavior : MonoBehaviour
     
     public void Repeat()
     {
-        SceneManager.LoadScene("GameSingleplayer");
+        SceneManager.LoadScene("AppGame");
     }
 }
