@@ -21396,7 +21396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missilPrefab: {fileID: 4664159598162376938, guid: 284c4cf4dc8f9ef4f8ed61b114d57cac, type: 3}
-  missilSpeed: 10
+  missilSpeed: 20
   missilButton: {fileID: 811556641}
 --- !u!1001 &1230437042
 PrefabInstance:

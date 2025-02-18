@@ -1,12 +1,14 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Missil : MonoBehaviour
 {
+    private EnemyCar enemyCar;
+    
     void Awake()
     {
         StartCoroutine(MissilCooldownCoroutine());
+        enemyCar = GameObject.FindWithTag("Enemy").GetComponent<EnemyCar>();
     }
 
     IEnumerator MissilCooldownCoroutine()
@@ -19,7 +21,8 @@ public class Missil : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Parar carro
+            Debug.Log("Inimigo Atingido");
+            enemyCar.ReduceSpeed(2f, 0.5f); // Reduz a velocidade por 2 segundos
         }
 
         if (!collision.gameObject.CompareTag("Player"))
