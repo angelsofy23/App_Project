@@ -65,14 +65,14 @@ public class ButtonsBehavior : MonoBehaviour
 
     public void PauseGame()
     {
-        winningPost.gamePaused = true;
+        //winningPost.gamePaused = true;
         menuPausa.SetActive(true);
         Time.timeScale = 0f;
     }
 
     public void ContinueGame()
     {
-        winningPost.gamePaused = false;
+        //winningPost.gamePaused = false;
         menuPausa.SetActive(false);
         Time.timeScale = 1f;
     }
@@ -95,5 +95,10 @@ public class ButtonsBehavior : MonoBehaviour
     public void Repeat()
     {
         SceneManager.LoadScene("AppGame");
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene("NextLevel");
     }
 }
