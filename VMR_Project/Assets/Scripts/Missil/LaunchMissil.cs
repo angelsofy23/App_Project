@@ -10,7 +10,7 @@ public class LaunchMissil : MonoBehaviour
     private float transparencyValue = 125f;
     private bool canLaunchMissil = true;
 
-    private float time = 5.0f;
+    private float time = 10.0f;
     private float timer;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
