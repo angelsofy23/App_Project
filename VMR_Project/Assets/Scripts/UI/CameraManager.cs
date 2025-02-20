@@ -9,7 +9,7 @@ public class CameraManager : MonoBehaviour
     public RawImage cameraView, photoFrame; // RawImage para a câmera e para mostrar a última foto
     private WebCamTexture webcamTexture; // Para capturar a câmera
     private Texture2D capturedImage; // Para armazenar a foto
-    private int currentCameraIndex = 0; // Track current camera
+    private int currentCameraIndex = 0; // Track da câmera
 
     void Start()
     {

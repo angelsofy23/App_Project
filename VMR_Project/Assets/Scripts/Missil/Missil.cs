@@ -7,12 +7,15 @@ public class Missil : MonoBehaviour
     
     void Awake()
     {
+        // Inicia a corrotina que controla o tempo de cooldown do míssil
         StartCoroutine(MissilCooldownCoroutine());
+        // Encontra o objeto com a tag "Enemy" e obtém o componente EnemyCar associado ao mesmo
         enemyCar = GameObject.FindWithTag("Enemy").GetComponent<EnemyCar>();
     }
 
     IEnumerator MissilCooldownCoroutine()
     {
+        // Espera por 7 segundos antes de destruir o míssil
         yield return new WaitForSeconds(7);
         Destroy(gameObject);
     }

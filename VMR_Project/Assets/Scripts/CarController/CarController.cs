@@ -4,25 +4,26 @@ using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
-    private float horizontalInput, verticalInput;
-    private float currentSteerAngle, currentbreakForce;
+    // Variáveis de entrada do jogador
+    private float horizontalInput, verticalInput; //movimento
+    private float currentSteerAngle, currentbreakForce; //viragem e travagem
     private bool isBreaking;
 
     private bool isManualBraking = false;
 
-
+    // Sistema de entrada do jogador - para fazer o movimento através do Input System
     private PlayerInput playerInput;
     private InputAction moveAction;
 
     [Header("Sounds and Effects")]
-    public ParticleSystem[] smokeEffects;
-    private bool smokeEffectsEnabled;
+    public ParticleSystem[] smokeEffects; // Efeito de fumo ao travar
+    private bool smokeEffectsEnabled; 
 
-    public AudioSource engineSound;
+    public AudioSource engineSound; // Som do motor
 
-    [Header("Lap")]
-    public int maxLaps;
-    public int currentLap;
+    [Header("Lap")] //Sistema de voltas
+    public int maxLaps; // Número máximo de voltas
+    public int currentLap; // Volta atual
 
     // Speed Boost
     private bool isBoosting = false;
@@ -45,6 +46,7 @@ public class CarController : MonoBehaviour
 
     void Start()
     {
+        // Configuração inicial do som do motor
         engineSound.loop = true;
         engineSound.playOnAwake = false;
         engineSound.volume = 0.1f;
@@ -58,17 +60,17 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        GetInput();
-        HandleMotor();
-        CalculateSteering();
-        UpdateWheels();
-        ApplyTransformToWheels();
-        UpdateEngineSound();
+        GetInput(); // Captura a entrada do jogador
+        HandleMotor(); // Aplica aceleração e travagem
+        CalculateSteering(); // Calcula a direção do volante
+        UpdateWheels(); // Atualiza a posição das rodas
+        ApplyTransformToWheels(); // Aplica transformações visuais às rodas
+        UpdateEngineSound(); // Atualiza o som do motor baseado na velocidade
     }
-
 
     private void HandleMotor()
     {
+        // Aplica torque aos motores das rodas dianteiras
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         currentbreakForce = isBreaking ? breakForce : 0f;
@@ -78,6 +80,7 @@ public class CarController : MonoBehaviour
 
     private void ApplyBreaking()
     {
+        // Aplica força de travagem a todas as rodas
         frontRightWheelCollider.brakeTorque = currentbreakForce;
         frontLeftWheelCollider.brakeTorque = currentbreakForce;
         rearLeftWheelCollider.brakeTorque = currentbreakForce;
@@ -108,17 +111,15 @@ public class CarController : MonoBehaviour
         // Aumentar ainda mais a suavização com um valor maior no Power
         float smoothFactor = Mathf.Pow(normalizedSpeed, 0.3f);  // Aumento mais suave
 
-        // Altere a interpolação para que o som mude mais suavemente
-        // Para o pitch, use uma variação ainda mais controlada
         float targetPitch = Mathf.Lerp(0.7f, 1.0f, smoothFactor);  // Intervalo mais baixo
         float targetVolume = Mathf.Lerp(0.1f, 0.2f, smoothFactor);  // Volume mais baixo também
 
-        // Aplicando o novo pitch e volume
+        
         engineSound.pitch = targetPitch;
         engineSound.volume = targetVolume;
     }
 
-    private void CalculateSteering()
+    private void CalculateSteering()  // Calcula o ângulo de direção do carro
     {
         float targetSteerAngle = maxSteerAngle * horizontalInput;
         currentSteerAngle = Mathf.Lerp(currentSteerAngle, targetSteerAngle, Time.deltaTime * steeringSpeed);
@@ -126,7 +127,7 @@ public class CarController : MonoBehaviour
         frontRightWheelCollider.steerAngle = currentSteerAngle;
     }
 
-    private void UpdateWheels()
+    private void UpdateWheels()  // Atualiza a posição das rodas com base nos colliders
     {
         UpdateSingleWheel(frontLeftWheelCollider, frontLeftWheelTransform);
         UpdateSingleWheel(frontRightWheelCollider, frontRightWheelTransform);
@@ -136,15 +137,19 @@ public class CarController : MonoBehaviour
 
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
     {
+        // Obtém a posição e rotação da roda a partir do collider
         Vector3 pos;
         Quaternion rot;
         wheelCollider.GetWorldPose(out pos, out rot);
+
+        // Aplica a rotação e posição ao transform da roda
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
 
     public void ApplyTransformToWheels()
     {
+        // Atualiza a posição e rotação de todas as rodas
         Vector3 position;
         Quaternion rotation;
 
@@ -167,6 +172,7 @@ public class CarController : MonoBehaviour
 
     private void EnableSmokeEffects(bool enable)
     {
+        // Ativa ou desativa os efeitos de fumo nas rodas
         foreach (ParticleSystem smokeEffect in smokeEffects)
         {
             if (enable)
@@ -181,22 +187,27 @@ public class CarController : MonoBehaviour
     }
     public void IncreaseLap()
     {
+        // Incrementa a contagem de voltas e exibe na consola
         currentLap++;
         Debug.Log(gameObject.name + " Lap: " + currentLap);
     }
 
     public void BoostSpeed(float duration, float multiplier)
     {
+        // Inicia um boost de velocidade por tempo determinado
         StartCoroutine(BoostSpeedCoroutine(duration, multiplier));
     }
 
     private IEnumerator BoostSpeedCoroutine(float duration, float multiplier)
     {
+        // Aumenta temporariamente a força do motor
         float originalMotorForce = motorForce;
         motorForce *= multiplier;
 
+        // Aguarda o tempo do boost
         yield return new WaitForSeconds(duration);
 
+        // Restaura a força original do motor
         motorForce = originalMotorForce;
     }
 
@@ -220,7 +231,7 @@ public class CarController : MonoBehaviour
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
         horizontalInput = inputVector.x;
 
-        // Se os botões não estiverem sendo usados, o joystick controla o travão
+        // Se os botões não estiverem  a ser usados, o joystick controla o travão
         if (!isManualBraking)
         {
             verticalInput = inputVector.y;

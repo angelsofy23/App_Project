@@ -24,7 +24,7 @@ public class GenerateBuilds : MonoBehaviour
     {
         for (int i = 0; i < numberOfBuildings; i++)
         {
-            // Exibir a posição gerada no console
+            // Exibir a posição gerada na consola
             Debug.Log($"Posição do prédio {i + 1}");
 
             // Escolher um prefab aleatório
@@ -36,10 +36,10 @@ public class GenerateBuilds : MonoBehaviour
             // Definir o objeto vazio (parent) como o pai do prédio instanciado
             buildingInstance.transform.SetParent(parentTransform);
 
-            // Verificar se o prédio recém-instanciado está colidindo com outros prédios
+            // Verificar se o prédio recém-instanciado está a colidir com outros prédios
             if (IsCollidingWithOtherBuildings(buildingInstance))
             {
-                // Destroi o prédio recém-criado se estiver colidindo com outro
+                // Destroi o prédio recém-criado se estiver a colidri com outro
                 Debug.Log($"Prédio {buildingInstance.name} destruído por colisão ao ser instanciado");
                 Destroy(buildingInstance);
             }
@@ -48,7 +48,7 @@ public class GenerateBuilds : MonoBehaviour
 
     Vector3 GetRandomBuildingPosition()
     {
-        // Vamos colocar prédios nas bordas da pista.
+        // oClocar prédios nas bordas da pista
         bool placeOnXAxis = Random.Range(0, 2) == 0;
 
         float xPos = 0f;
@@ -88,13 +88,13 @@ public class GenerateBuilds : MonoBehaviour
         return new Vector3(xPos, 0f, zPos);
     }
     
-    // Função para verificar colisão com outros prédios
+    // Função para verificar a colisão com outros prédios
     bool IsCollidingWithOtherBuildings(GameObject buildingInstance)
     {
         // Obtém o colisor do prédio instanciado
         Collider buildingCollider = buildingInstance.GetComponent<Collider>();
 
-        // Verifica se o colisor está sobrepondo com outros colisores de prédios
+        // Verifica se o colisor se estás a sobrepor a outros colisores de prédios
         Collider[] hitColliders = Physics.OverlapBox(buildingCollider.bounds.center, buildingCollider.bounds.extents,
             Quaternion.identity);
 
@@ -103,7 +103,7 @@ public class GenerateBuilds : MonoBehaviour
         {
             if (hitCollider.gameObject.CompareTag("Building") && hitCollider.gameObject != buildingInstance)
             {
-                return true; // Está colidindo com outro prédio
+                return true; // Está a colidir com outro prédio
             }
         }
 

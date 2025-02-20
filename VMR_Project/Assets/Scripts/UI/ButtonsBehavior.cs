@@ -14,14 +14,9 @@ public class ButtonsBehavior : MonoBehaviour
     {
         Time.timeScale = 1f;
         
-        // Make sure options menu is hidden at start
+        // Certifica-se de que o menu de opções fica escondido no início
         if (optionsMenu != null)
             optionsMenu.SetActive(false);
-    }
-
-    void Update()
-    {
-
     }
 
     public void StartGame()
