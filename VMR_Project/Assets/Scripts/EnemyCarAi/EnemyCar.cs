@@ -24,14 +24,14 @@ public class EnemyCar : MonoBehaviour
     public int maxLaps;
     public int currentLap;
 
+    [Header("Respawn")]
+    public float respawnTimer = 0f;
+    public const float respawnTimeThreshold = 5f;
+
     private Rigidbody rb;
     public bool isInactive = false;
     private float deactivateTime;
     private float deactivateDuration = 5f;
-
-    [Header("Waypoint Management")]
-    public Waypoint currentWaypoint;
-    public Waypoint lastWaypoint;
 
     void Start()
     {
@@ -41,6 +41,24 @@ public class EnemyCar : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         maxLaps = FindObjectOfType<FinishSystem>().maxLaps;
+    }
+
+    void Update()
+    {
+        if (!destinationReached)
+        {
+            respawnTimer += Time.deltaTime;
+
+            if (respawnTimer >= respawnTimeThreshold)
+            {
+                //respawn the car
+                RespawnAtDestination();
+            }
+        }
+        else
+        {
+            respawnTimer = 0f;
+        }
     }
 
     void FixedUpdate()
@@ -56,10 +74,7 @@ public class EnemyCar : MonoBehaviour
             ReactivateEnemy();
         }
 
-        if (currentWaypoint != null && Vector3.Distance(transform.position, currentWaypoint.transform.position) > currentWaypoint.waypointWidth)
-        {
-            ReturnToLastWaypoint();
-        }
+       
     }
 
     void Drive()
@@ -117,6 +132,15 @@ public class EnemyCar : MonoBehaviour
         }
     }
 
+    private void RespawnAtDestination()
+    {
+        respawnTimer = 0f;
+        currentSpeed = 5f;
+
+        transform.position = destination;
+        destinationReached = false;
+    }
+
     public void LocateDestination(Vector3 newDestination)
     {
         destination = newDestination;
@@ -164,19 +188,7 @@ public class EnemyCar : MonoBehaviour
         Debug.Log($"Inimigo {gameObject.name} reapareceu!");
     }
 
-    private void ReturnToLastWaypoint()
-    {
-        if (lastWaypoint != null)
-        {
-            LocateDestination(lastWaypoint.GetPosition());
-            Debug.Log($"Inimigo {gameObject.name} retornando para o último waypoint: {lastWaypoint.name}");
-        }
-    }
-
-    public void UpdateLastWaypoint(Waypoint waypoint)
-    {
-        lastWaypoint = waypoint;
-    }
+   
 
     // Trigger Collider para detectar obstáculos próximos
     private void OnTriggerEnter(Collider other)

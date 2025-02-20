@@ -9,7 +9,6 @@ public class EnemyCarWaypoints : MonoBehaviour
     void Start()
     {
         enemyCar.LocateDestination(currentWaypoint.GetPosition());
-        enemyCar.UpdateLastWaypoint(currentWaypoint);  // Atualiza o último waypoint logo no início
     }
 
     void Update()
@@ -18,7 +17,6 @@ public class EnemyCarWaypoints : MonoBehaviour
         {
             currentWaypoint = currentWaypoint.nextWaypoint;
             enemyCar.LocateDestination(currentWaypoint.GetPosition());
-            enemyCar.UpdateLastWaypoint(currentWaypoint);  // Atualiza o último waypoint ao alcançar um novo
         }
     }
 }
