@@ -7,6 +7,8 @@ public class ButtonsBehavior : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject menuPausa;
     [SerializeField] private GameObject howToPlayPanel;
+
+    [SerializeField] private WinningPost winningPost;
     
     void Start()
     {
@@ -63,12 +65,14 @@ public class ButtonsBehavior : MonoBehaviour
 
     public void PauseGame()
     {
-            menuPausa.SetActive(true);
-            Time.timeScale = 0f;
+        winningPost.gamePaused = true;
+        menuPausa.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void ContinueGame()
     {
+        winningPost.gamePaused = false;
         menuPausa.SetActive(false);
         Time.timeScale = 1f;
     }
