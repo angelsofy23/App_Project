@@ -114,8 +114,6 @@ public class CarController : MonoBehaviour
         
         engineSound.pitch = targetPitch;
         engineSound.volume = targetVolume * mainSound.volume;
-        Debug.Log("Volume: " + engineSound.volume);
-        Debug.Log("Volume Main: " + mainSound.volume);
     }
 
     private void CalculateSteering()  // Calcula o ângulo de direção do carro
