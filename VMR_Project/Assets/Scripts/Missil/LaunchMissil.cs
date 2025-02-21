@@ -3,39 +3,41 @@ using UnityEngine.UI;
 
 public class LaunchMissil : MonoBehaviour
 {
-    // Prefab do míssil, velocidade do míssil e botão para lançar
+    // Prefab do mï¿½ssil, velocidade do mï¿½ssil e botï¿½o para lanï¿½ar
     [SerializeField] private GameObject missilPrefab;
     [SerializeField] private float missilSpeed;
 
-    // Referência ao botão de lançamento do míssil
+    // Referï¿½ncia ao botï¿½o de lanï¿½amento do mï¿½ssil
     [SerializeField] private Button missilButton;
     private float transparencyValue = 125f;
     private bool canLaunchMissil = true;
 
-    // Tempo de recarga do botão
+    // Tempo de recarga do botï¿½o
     private float time = 10.0f;
     private float timer;
     
     void Start()
     {
+        // make rotation be 0 0 0
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         // Inicializa o timer com o valor definido
         timer = time;
-        // Adiciona um listener para o evento de clique do botão
+        // Adiciona um listener para o evento de clique do botï¿½o
         missilButton.onClick.AddListener(OnMissilButtonPressed);
     }
     
     void Update()
     {
-        // Se não for possível lançar o míssil, vamos atualizar o timer
+        // Se nï¿½o for possï¿½vel lanï¿½ar o mï¿½ssil, vamos atualizar o timer
         if (!canLaunchMissil)
         {
             timer += Time.deltaTime;
 
             if (timer >= time)
             {
-                // Permite o lançamento do míssil novamente
+                // Permite o lanï¿½amento do mï¿½ssil novamente
                 canLaunchMissil = true;
-                // Torna o botão interativo de novo
+                // Torna o botï¿½o interativo de novo
                 missilButton.interactable = true;
             }
         }
@@ -43,36 +45,36 @@ public class LaunchMissil : MonoBehaviour
 
     private void OnMissilButtonPressed()
     {
-        // Se o lançamento do míssil for permitido
+        // Se o lanï¿½amento do mï¿½ssil for permitido
         if (canLaunchMissil)
         {
-            // Cria o míssil no local e rotação do objeto que tem esse script
+            // Cria o mï¿½ssil no local e rotaï¿½ï¿½o do objeto que tem esse script
             var missil = Instantiate(missilPrefab, transform.position, transform.rotation);
-            // Dá ao míssil uma velocidade inicial para ele se mover
-            missil.GetComponent<Rigidbody>().linearVelocity = transform.forward * missilSpeed;
+            // Dï¿½ ao mï¿½ssil uma velocidade inicial para ele se mover
+            missil.GetComponent<Rigidbody>().linearVelocity = - transform.right * missilSpeed;
 
-            // Ajusta a configuração de transparência do botão
+            // Ajusta a configuraï¿½ï¿½o de transparï¿½ncia do botï¿½o
             SetButtonConfiguration(transparencyValue);
 
-            // Impede o lançamento de outro míssil até que o tempo de recarga seja concluído
+            // Impede o lanï¿½amento de outro mï¿½ssil atï¿½ que o tempo de recarga seja concluï¿½do
             canLaunchMissil = false;
-            // Desabilita a interação com o botão até que o recarregamento seja concluído
+            // Desabilita a interaï¿½ï¿½o com o botï¿½o atï¿½ que o recarregamento seja concluï¿½do
             missilButton.interactable = false;
 
-            // Reinicia o timer para começar a contagem do tempo de recarga
+            // Reinicia o timer para comeï¿½ar a contagem do tempo de recarga
             timer = 0;  
         }
     }
 
     private void SetButtonConfiguration(float value)
     {
-        // Obtém a configuração atual de cores do botão
+        // Obtï¿½m a configuraï¿½ï¿½o atual de cores do botï¿½o
         ColorBlock colors = missilButton.colors;
 
-        // Ajusta a transparência da cor normal do botão
+        // Ajusta a transparï¿½ncia da cor normal do botï¿½o
         colors.normalColor = new Color(colors.normalColor.r, colors.normalColor.g, colors.normalColor.b, value);
 
-        // Aplica as novas cores ao botão
+        // Aplica as novas cores ao botï¿½o
         missilButton.colors = colors;
     }
 }

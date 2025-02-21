@@ -21,7 +21,7 @@ public class GenerateBuilds : MonoBehaviour
         for (int i = 0; i < numberOfBuildings; i++)
         {
             // Exibir a posição gerada na consola
-            Debug.Log($"Posição do prédio {i + 1}");
+            // Debug.Log($"Posição do prédio {i + 1}");
 
             // Escolher um prefab aleatório
             GameObject buildingPrefab = buildingPrefabs[Random.Range(0, buildingPrefabs.Length)];
@@ -36,7 +36,7 @@ public class GenerateBuilds : MonoBehaviour
             if (IsCollidingWithOtherBuildings(buildingInstance))
             {
                 // Destroi o prédio recém-criado se estiver a colidri com outro
-                Debug.Log($"Prédio {buildingInstance.name} destruído por colisão ao ser instanciado");
+                // Debug.Log($"Prédio {buildingInstance.name} destruído por colisão ao ser instanciado");
                 Destroy(buildingInstance);
             }
         }

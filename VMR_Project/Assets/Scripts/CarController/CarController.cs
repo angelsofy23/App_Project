@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
+    [Header("Car Settings")]
     // Variáveis de entrada do jogador
     private float horizontalInput, verticalInput; //movimento
     private float currentSteerAngle, currentbreakForce; //viragem e travagem
@@ -20,10 +21,7 @@ public class CarController : MonoBehaviour
     private bool smokeEffectsEnabled; 
 
     public AudioSource engineSound; // Som do motor
-
-    [Header("Lap")] //Sistema de voltas
-    public int maxLaps; // Número máximo de voltas
-    public int currentLap; // Volta atual
+    public AudioSource mainSound;
 
     // Speed Boost
     private bool isBoosting = false;
@@ -46,6 +44,8 @@ public class CarController : MonoBehaviour
 
     void Start()
     {
+        mainSound = GameObject.Find("SFXSource").GetComponent<AudioSource>();
+
         // Configuração inicial do som do motor
         engineSound.loop = true;
         engineSound.playOnAwake = false;
@@ -54,8 +54,6 @@ public class CarController : MonoBehaviour
         engineSound.Play();
 
         originalMotorForce = motorForce; // Salva o valor original ao iniciar o jogo
-
-        maxLaps = FindObjectOfType<FinishSystem>().maxLaps;
     }
 
     private void FixedUpdate()
@@ -113,10 +111,11 @@ public class CarController : MonoBehaviour
 
         float targetPitch = Mathf.Lerp(0.7f, 1.0f, smoothFactor);  // Intervalo mais baixo
         float targetVolume = Mathf.Lerp(0.1f, 0.2f, smoothFactor);  // Volume mais baixo também
-
         
         engineSound.pitch = targetPitch;
-        engineSound.volume = targetVolume;
+        engineSound.volume = targetVolume * mainSound.volume;
+        Debug.Log("Volume: " + engineSound.volume);
+        Debug.Log("Volume Main: " + mainSound.volume);
     }
 
     private void CalculateSteering()  // Calcula o ângulo de direção do carro
@@ -156,7 +155,6 @@ public class CarController : MonoBehaviour
         frontLeftWheelCollider.GetWorldPose(out position, out rotation);
         frontLeftWheelTransform.position = position;
         frontLeftWheelTransform.rotation = rotation;
-
         frontRightWheelCollider.GetWorldPose(out position, out rotation);
         frontRightWheelTransform.position = position;
         frontRightWheelTransform.rotation = rotation;
@@ -184,12 +182,6 @@ public class CarController : MonoBehaviour
                 smokeEffect.Stop();
             }
         }
-    }
-    public void IncreaseLap()
-    {
-        // Incrementa a contagem de voltas e exibe na consola
-        currentLap++;
-        Debug.Log(gameObject.name + " Lap: " + currentLap);
     }
 
     public void BoostSpeed(float duration, float multiplier)
@@ -229,12 +221,12 @@ public class CarController : MonoBehaviour
     private void GetInput()
     {
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
-        horizontalInput = inputVector.x;
-
+        horizontalInput = inputVector.x + Input.GetAxis("Horizontal");
+        
         // Se os botões não estiverem  a ser usados, o joystick controla o travão
         if (!isManualBraking)
-        {
-            verticalInput = inputVector.y;
+        { 
+            verticalInput = inputVector.y + Input.GetAxis("Vertical");
             isBreaking = Input.GetKey(KeyCode.Space); // Mantém o travão manual pelo teclado
         }
     }

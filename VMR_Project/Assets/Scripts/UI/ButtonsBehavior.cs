@@ -7,14 +7,11 @@ public class ButtonsBehavior : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject menuPausa;
     [SerializeField] private GameObject howToPlayPanel;
-
-    [SerializeField] private WinningPost winningPost;
-    
     void Start()
     {
         Time.timeScale = 1f;
         
-        // Certifica-se de que o menu de opções fica escondido no início
+        // Certifica-se de que o menu de opï¿½ï¿½es fica escondido no inï¿½cio
         if (optionsMenu != null)
             optionsMenu.SetActive(false);
     }
@@ -60,14 +57,12 @@ public class ButtonsBehavior : MonoBehaviour
 
     public void PauseGame()
     {
-        //winningPost.gamePaused = true;
         menuPausa.SetActive(true);
         Time.timeScale = 0f;
     }
 
     public void ContinueGame()
     {
-        //winningPost.gamePaused = false;
         menuPausa.SetActive(false);
         Time.timeScale = 1f;
     }

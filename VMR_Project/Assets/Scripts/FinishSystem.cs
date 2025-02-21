@@ -6,11 +6,11 @@ public class FinishSystem : MonoBehaviour
 {
     public int maxLaps;
     private int currentLap;
+    public GameObject winPanel;
 
     private void OnTriggerEnter(Collider other)
     {
         EnemyCar enemyCar = other.GetComponent<EnemyCar>();
-        CarController playerCar = other.GetComponent<CarController>();
 
         if (enemyCar != null)
         {
@@ -18,11 +18,6 @@ public class FinishSystem : MonoBehaviour
             CheckRaceCompletion(enemyCar);
         }
 
-        if (playerCar != null)
-        {
-            playerCar.IncreaseLap();
-            CheckRaceCompletion(playerCar);
-        }
     }
 
     private void CheckRaceCompletion(EnemyCar enemyCar)
@@ -33,19 +28,12 @@ public class FinishSystem : MonoBehaviour
         }
     }
 
-    private void CheckRaceCompletion(CarController playerCar)
-    {
-        if (playerCar.currentLap == maxLaps)
-        {
-            EndMission(true);
-        }
-    }
-
-    void EndMission(bool success)
+    public void EndMission(bool success)
     {
         if (success)
         {
             Debug.Log("Player Wins");
+            winPanel.SetActive(true);
         }
         else
         {
