@@ -6,8 +6,6 @@ public class WinningPost : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private TextMeshProUGUI countLaps;
 
-    public bool gamePaused;
-
     private CarController car; 
     
     private Checkpoint[] checkpoints;
@@ -16,6 +14,8 @@ public class WinningPost : MonoBehaviour
     private float maxTime = 180f; // 3 min
     private float remainingTime;
     
+    public bool gamePaused;
+    
     private void Awake()
     {
         // Encontra o objeto com a tag "Player" e obtém o componente CarController associado ao mesmo
@@ -23,8 +23,10 @@ public class WinningPost : MonoBehaviour
 
         // Encontra todos os objetos do tipo Checkpoint na cena
         checkpoints = FindObjectsOfType<Checkpoint>();
+        
         // Inicializa o tempo restante com o valor máximo de tempo permitido para a corrida (maxTime).
         remainingTime = maxTime;
+        
         // Atualiza o texto que exibe a quantidade de voltas (laps) do jogador.
         countLaps.text = $"{car.currentLap} / {car.maxLaps}";
     }

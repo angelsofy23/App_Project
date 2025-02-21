@@ -5,12 +5,8 @@ public class GenerateBuilds : MonoBehaviour
 {
     [SerializeField] private GameObject[] buildingPrefabs; // Referência ao array de prefabs dos prédios
     [SerializeField] private int numberOfBuildings = 100; // Quantidade de prédios a serem gerados
-
-    // Limites da pista
-    private float minX = 25f;
-    private float maxX = 120f;
-    private float minZ = 30f;
-    private float maxZ = 120f;
+    
+    [SerializeField] private MapLimits mapLimits; // Referência ao ScriptableObject de limites do Mapa
 
     private Transform parentTransform; // Referência ao objeto vazio (parent)
 
@@ -48,7 +44,7 @@ public class GenerateBuilds : MonoBehaviour
 
     Vector3 GetRandomBuildingPosition()
     {
-        // oClocar prédios nas bordas da pista
+        // Colocar prédios nas bordas da pista
         bool placeOnXAxis = Random.Range(0, 2) == 0;
 
         float xPos = 0f;
@@ -56,32 +52,32 @@ public class GenerateBuilds : MonoBehaviour
 
         if (placeOnXAxis)
         {
-            xPos = Random.Range(minX, maxX);
-            zPos = Random.Range(minZ, maxZ);
+            xPos = Random.Range(mapLimits.MinX, mapLimits.MaxX);
+            zPos = Random.Range(mapLimits.MinZ, mapLimits.MaxZ);
 
             // Afasta um pouco da pista
             if (Random.Range(0, 2) == 0)
             {
-                zPos = minZ - 10f; // Borda inferior
+                zPos = mapLimits.MinZ - 10f; // Borda inferior
             }
             else
             {
-                zPos = maxZ + 10f; // Borda superior
+                zPos = mapLimits.MaxZ + 10f; // Borda superior
             }
         }
         else
         {
-            zPos = Random.Range(minZ, maxZ);
-            xPos = Random.Range(minX, maxX);
+            zPos = Random.Range(mapLimits.MinZ, mapLimits.MaxZ);
+            xPos = Random.Range(mapLimits.MinX, mapLimits.MaxX);
 
             // Afasta um pouco da pista
             if (Random.Range(0, 2) == 0)
             {
-                xPos = minX - 10f; // Borda esquerda
+                xPos = mapLimits.MinX - 10f; // Borda esquerda
             }
             else
             {
-                xPos = maxX + 10f; // Borda direita
+                xPos = mapLimits.MaxX + 10f; // Borda direita
             }
         }
 

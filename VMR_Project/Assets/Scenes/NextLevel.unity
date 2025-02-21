@@ -10133,11 +10133,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingPrefabs:
   - {fileID: 2571504398995303138, guid: 0c7f1786f206a4f149506fbb91114ee7, type: 3}
+  - {fileID: 6719888361061052548, guid: f154d8e56ba3c48c18e04e119cc1c9cd, type: 3}
+  - {fileID: 7051800037286115493, guid: ceb1ff597bc644b29bb228f75a1e3e32, type: 3}
   - {fileID: 5720013252100257546, guid: c003e24639b7949cf8abbaaf6ba7f4c5, type: 3}
+  - {fileID: 7531719450239269777, guid: 380532d3abf5c4965bbe57f01a44b6f7, type: 3}
   - {fileID: 6913838050020503594, guid: b8b48fd9575c34dde9410dee78a4ff72, type: 3}
+  - {fileID: 1214593064065632294, guid: ae143931a5435412bb49667fb5750a3b, type: 3}
+  - {fileID: 9060964938156956912, guid: 9e7280d5e34184239966f48cfe7539ab, type: 3}
+  - {fileID: 8492517402437331215, guid: 47eba24edd6844f9ca3ad6953170ab1c, type: 3}
+  - {fileID: 7031072911745939369, guid: 10d98aad7ab824bc7835210e42e32f3d, type: 3}
   - {fileID: 6258908420346666966, guid: 8be760067bfd64276b6a98998751e48c, type: 3}
+  - {fileID: 7568669553352357607, guid: 96d468962340d443989d3580d218cb93, type: 3}
+  - {fileID: 9185167484837085440, guid: 2738b587b9bcf431b89364c9b96631ac, type: 3}
   - {fileID: 9095892138787466633, guid: 7e1e1e5641b7b430e9cff12b237d76cf, type: 3}
   numberOfBuildings: 100
+  mapLimits: {fileID: 11400000, guid: f2b455bddcc437141b35e49d030fcbea, type: 2}
 --- !u!4 &1824295672
 Transform:
   m_ObjectHideFlags: 0
